@@ -110,19 +110,59 @@ class SinglyLinkedList {
     this.length++;
     return true;
   }
+  remove(index) {
+    if (index < 0 || index > this.length) return undefined;
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return this.shift();
+    let previousNode = this.get(index - 1);
+    let removed = previousNode.next;
+    previousNode.next = removed.next;
+    this.length--;
+    return removed;
+  }
+  print() {
+    let arr = [];
+    let current = this.head;
+    while (current.next) {
+      arr.push(current.val);
+      current = current.next;
+    }
+    console.log(arr);
+  }
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+    let next;
+    let prev = null;
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return this;
+  }
 }
+// head             tail
+// null  [13    ->     27     ->    32    ->    71]
+//                                              prev        node
+//next=undefined
+// tail             head
+// [13    <-      27     <-   32      <-    71]
 
-// var first = new Node("Hi")
-// first.next = new Node("there")
-// first.next.next = new Node("how")
-// first.next.next.next = new Node("are")
-// first.next.next.next.next = new Node("you")
+//node=13
+//next=27
 
 var list = new SinglyLinkedList();
-list.push("HELLO");
-list.push("GOODBYE");
-list.push("!");
-list.push("<3");
-list.push(":)");
+// list.push("HELLO");
+// list.push("GOODBYE");
+// list.push("!");
+// list.push("<3");
+// list.push(":)");
+list.push(13); //next 27
+list.push(27); //next 32
+list.push(32); //next 71
+list.push(71); //next null
 console.log(list.pop());
 console.log(list);
